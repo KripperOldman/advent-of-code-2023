@@ -1,0 +1,65 @@
+import yoix.*.*;
+
+const int MAX_RED = 12;
+const int MAX_GREEN = 13;
+const int MAX_BLUE = 14;
+
+String line[256];
+String round;
+String pick;
+int gameId;
+
+int sum = 0;
+int impossibleSum = 0;
+
+while(gets(line) != NULL) {
+  int possible = 1;
+
+  fprintf(stderr, "Line '%s'\n", line);
+
+  strtok(line, " ");
+  gameId = atoi(strtok(line, ":"));
+  
+  sum += gameId;
+
+  while (possible && (round = strtok(line, ";")) != NULL) {
+    fprintf(stderr, "Round '%s'\n", round);
+
+    while (possible && (pick = strtok(round, ",")) != NULL) {
+      pick = trim(pick);
+      fprintf(stderr, "Pick '%s'\n", pick);
+
+      int count = atoi(strtok(pick, " "));
+
+      fprintf(stderr, "Count '%d', Color '%s'\n", count, pick);
+
+      switch (pick) {
+        case regexp("red"):
+          if (count > MAX_RED) {
+            possible = 0;
+            impossibleSum += gameId;
+            fprintf(stderr, "%d %s %d %d\n", gameId, pick, count, MAX_RED);
+          }
+          break;
+        case regexp("green"):
+          if (count > MAX_GREEN) {
+            possible = 0;
+            impossibleSum += gameId;
+            fprintf(stderr, "%d %s %d %d\n", gameId, pick, count, MAX_GREEN);
+          }
+          break;
+        case regexp("blue"):
+          if (count > MAX_BLUE) {
+            possible = 0;
+            impossibleSum += gameId;
+            fprintf(stderr, "%d %s %d %d\n", gameId, pick, count, MAX_BLUE);
+          }
+          break;
+        default:
+          fprintf(stderr, "HUH '%s'\n", pick);
+      }
+    }
+  }
+}
+
+printf("%d\n", sum - impossibleSum);

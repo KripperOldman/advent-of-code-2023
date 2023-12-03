@@ -1,0 +1,64 @@
+import yoix.*.*;
+
+String line[256];
+String round;
+String pick;
+int gameId;
+
+int powerSum = 0;
+
+while(gets(line) != NULL) {
+  int max_red = 0;
+  int max_green = 0;
+  int max_blue = 0;
+
+  fprintf(stderr, "Line '%s'\n", line);
+
+  strtok(line, " ");
+  gameId = atoi(strtok(line, ":"));
+
+  while ((round = strtok(line, ";")) != NULL) {
+    fprintf(stderr, "Round '%s'\n", round);
+
+    while ((pick = strtok(round, ",")) != NULL) {
+      pick = trim(pick);
+      fprintf(stderr, "Pick '%s'\n", pick);
+
+      int count = atoi(strtok(pick, " "));
+
+      fprintf(stderr, "Count '%d', Color '%s'\n", count, pick);
+
+      switch (pick) {
+        case regexp("red"):
+          if (count > max_red) {
+            max_red = count;
+          }
+          break;
+        case regexp("green"):
+          if (count > max_green) {
+            max_green = count;
+          }
+          break;
+        case regexp("blue"):
+          if (count > max_blue) {
+            max_blue = count;
+          }
+          break;
+        default:
+          fprintf(stderr, "HUH '%s'\n", pick);
+      }
+    }
+  }
+
+  fprintf(stderr, "%d red %d\n", gameId, max_red);
+  fprintf(stderr, "%d green %d\n", gameId, max_green);
+  fprintf(stderr, "%d blue %d\n", gameId, max_blue);
+
+  int power = max_red * max_green * max_blue;
+
+  fprintf(stderr, "%d Power Sum %d\n", gameId, max_blue);
+
+  powerSum += power;
+}
+
+printf("%d\n", powerSum);
