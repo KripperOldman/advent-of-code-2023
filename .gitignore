@@ -1,5 +1,9 @@
 .direnv
 .envrc
+.clj-kondo
+.lsp
+.nrepl-port
+.cpcache
 
 /day-02-yorick/yorick/
 /day-02-yoix/yoix/
