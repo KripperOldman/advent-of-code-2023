@@ -1,0 +1,39 @@
+#!./falcon.sh
+
+// from math import prod, sqrt, ceil
+// 
+// def sol_race(t: int, d: int) -> int:
+//     disc: float = sqrt(t * t - 4 * d)
+//     max_x: float = (t + disc) / 2
+//     max_t: int = int(max_x) + ceil(max_x - int(max_x)) - 1
+// 
+//     return int(2*(max_t - t / 2)) + 1
+// 
+// times = [int(x) for x in input().split(':')[1].split()]
+// distances = [int(x) for x in input().split(':')[1].split()]
+// 
+// sols = [sol_race(time, distance) for time, distance in zip(times, distances)]
+
+function sol_race(t, d)
+  disc = sqrt(t*t - 4*d)
+  max_x = (t + disc) / 2
+  max_t = int(max_x) + ceil(max_x - int(max_x)) - 1
+
+  return int(2*(max_t - t/2)) + 1
+end
+
+function zip(a, b)
+  max_i = min(a.len(), b.len())
+  i = 0
+  return function()
+    if i >= max_i: return oob(0)
+    i += 1
+    return [a[i-1], b[i-1]]
+  end
+end
+
+stdin = stdIn()
+time = ''.merge(stdin.grabLine().split(":")[1].trim().splittr(' '))
+distance = ''.merge(stdin.grabLine().split(":")[1].trim().splittr(' '))
+
+> sol = sol_race(int(time), int(distance))
